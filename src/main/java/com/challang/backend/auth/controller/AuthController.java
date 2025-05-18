@@ -19,21 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController extends ResponseUtil {
 
     private final AuthService authService;
-    private final EmailVerificationService emailVerificationService;
+//    private final EmailVerificationService emailVerificationService;
 
-
-    @PostMapping("/email/signup")
-    public ResponseEntity<ResponseDto<Boolean>> emailSignUp(@RequestBody @Valid EmailSignUpRequestDto requestDto) {
-        boolean success = authService.emailSignUp(requestDto);
-        return successResponse(success);
-    }
-
-    @PostMapping("/email/signin")
-    public ResponseEntity<ResponseDto<TokenResponse>> emailSignIn(
-            @RequestBody @Valid EmailSignInRequestDto requestDto) {
-        TokenResponse response = authService.emailSignIn(requestDto);
-        return successResponse(response);
-    }
 
     @PostMapping("/kakao/signup")
     public ResponseEntity<ResponseDto<Boolean>> kakaoSignUp(@RequestBody @Valid KakaoSignUpRequestDto requestDto) {
@@ -74,25 +61,39 @@ public class AuthController extends ResponseUtil {
         return successMessage("회원 탈퇴 완료");
     }
 
+// 이메일 회원가입 기능 제외에 따라 주석 처리
+//    @PostMapping("/email/signup")
+//    public ResponseEntity<ResponseDto<Boolean>> emailSignUp(@RequestBody @Valid EmailSignUpRequestDto requestDto) {
+//        boolean success = authService.emailSignUp(requestDto);
+//        return successResponse(success);
+//    }
+//
+//    @PostMapping("/email/signin")
+//    public ResponseEntity<ResponseDto<TokenResponse>> emailSignIn(
+//            @RequestBody @Valid EmailSignInRequestDto requestDto) {
+//        TokenResponse response = authService.emailSignIn(requestDto);
+//        return successResponse(response);
+//    }
 
-    @PostMapping("/email/send")
-    public ResponseEntity<ResponseDto<String>> sendAuthEmail(
-            @RequestBody @Valid EmailRequestDto emailDto) {
-        emailVerificationService.sendAuthEmail(emailDto.email());
-        return successMessage("인증 이메일 전송 완료");
-    }
 
-
-    @PostMapping("/email/check")
-    public ResponseEntity<ResponseDto<String>> verifyAuthNumber(
-            @RequestBody @Valid EmailCheckRequestDto requestDto) {
-        boolean isVerified = emailVerificationService.verifyAuthNumber(
-                requestDto.email(), requestDto.authNum());
-
-        return isVerified
-                ? successMessage("인증 성공")
-                : errorMessage("인증 실패");
-    }
+//    @PostMapping("/email/send")
+//    public ResponseEntity<ResponseDto<String>> sendAuthEmail(
+//            @RequestBody @Valid EmailRequestDto emailDto) {
+//        emailVerificationService.sendAuthEmail(emailDto.email());
+//        return successMessage("인증 이메일 전송 완료");
+//    }
+//
+//
+//    @PostMapping("/email/check")
+//    public ResponseEntity<ResponseDto<String>> verifyAuthNumber(
+//            @RequestBody @Valid EmailCheckRequestDto requestDto) {
+//        boolean isVerified = emailVerificationService.verifyAuthNumber(
+//                requestDto.email(), requestDto.authNum());
+//
+//        return isVerified
+//                ? successMessage("인증 성공")
+//                : errorMessage("인증 실패");
+//    }
 
 
 }
