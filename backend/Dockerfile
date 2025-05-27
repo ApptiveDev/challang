@@ -1,7 +1,10 @@
-FROM eclipse-temurin:17-jdk
+FROM gradle:jdk17-alpine AS build
+WORKDIR /app
+COPY . .
+RUN gradle clean build -x test
 
-WORKDIR /spring-boot
 
-COPY build/libs/*SNAPSHOT.jar app.jar
-
-ENTRYPOINT ["java", "-jar", "/spring-boot/app.jar"]
+FROM openjdk:17-slim
+WORKDIR /app
+COPY --from=build /app/build/libs/*jar server.jar
+CMD ["java", "-jar","./server.jar"]
