@@ -29,11 +29,23 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.text.TextStyle
 import com.stellan.challang.ui.theme.PaperlogyFamily
 
+private val adjectives   = listOf("청량한", "풍부한", "달콤한", "스파이시", "부드러운", "강렬한")
+private val alcoholNouns = listOf("소주", "맥주", "와인", "위스키", "칵테일", "전통주")
+
+private fun generateRandomNickname(): String {
+    val adj  = adjectives.random()
+    val noun = alcoholNouns.random()
+    val num  = (1..999).random().toString().padStart(3, '0')
+    return "$adj $noun $num"
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun getKoreanAge(birthYear: Int, birthMonth: Int, birthDay: Int): Int {
@@ -46,13 +58,13 @@ fun getKoreanAge(birthYear: Int, birthMonth: Int, birthDay: Int): Int {
     return age
 }
 
-@RequiresApi(Build.VERSION_CODES.Q)
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignupScreen(
     onSignupComplete: () -> Unit
 ) {
-    var nickname by remember { mutableStateOf("") }
+    var randomName by remember { mutableStateOf(generateRandomNickname()) }
     var gender by remember { mutableStateOf("남성") }
     val calendar = Calendar.getInstance().apply {
         add(Calendar.YEAR, -19)
@@ -62,8 +74,6 @@ fun SignupScreen(
     var day by remember { mutableIntStateOf(calendar.get(Calendar.DAY_OF_MONTH)) }
 
     val age = getKoreanAge(year, month, day)
-
-    var showNicknameWarning by remember { mutableStateOf(false) }
 
     var selectedProfileRes by remember { mutableIntStateOf(R.drawable.proflie_image_basic) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -188,17 +198,33 @@ fun SignupScreen(
                 color = Color.Black
             )
             OutlinedTextField(
-                value = nickname,
-                onValueChange = {
-                    nickname = it
-                    if (it.isNotBlank()) {
-                        showNicknameWarning = false
+                value         = randomName,
+                onValueChange = {},
+                readOnly      = true,
+                modifier      = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(
+                    fontFamily = PaperlogyFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp,
+                    color = Color(0xFF717171)
+                ),
+                trailingIcon  = {
+                    IconButton(onClick = {
+                        randomName = generateRandomNickname()
+                    }) {
+                        Icon(
+                            imageVector     = Icons.Default.Refresh,
+                            contentDescription = "닉네임 재생성"
+                        )
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
                     unfocusedContainerColor = Color(0xFFFFDDBA),
-                    unfocusedBorderColor = Color.Transparent
+                    unfocusedBorderColor    = Color.Transparent,
+                    disabledContainerColor  = Color(0xFFFFDDBA),
+                    disabledBorderColor     = Color.Transparent,
+                    focusedContainerColor   = Color(0xFFFFDDBA),
+                    focusedBorderColor      = Color.Transparent,
                 )
             )
             Spacer(modifier = Modifier.height(12.dp))
