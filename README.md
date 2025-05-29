@@ -30,6 +30,10 @@ ex) frontend/wonseok/fix-login-not-allowed   (이슈가 없으면)
  # 스크린샷
 
  # 팀원
- (Github Profile, 이름, 기수, 역할)
+| <img width="150" src="https://github.com/best11gh.png"> | <img width="150" src="https://github.com/dadaruda.png"> | <img width="150" src="https://github.com/betapa.png"> | <img width="150" src="https://github.com/FiveStarK.png"> |
+|:----------------------:|:----------------------:|:----------------------:|:----------------------:|
+| [이가현](https://github.com/best11gh) | [김다현](https://github.com/dadaruda) | [강태훈](https://github.com/betapa) | [권오성](https://github.com/FiveStarK) |
+| 💻 Backend | 💻 Frontend | 💻 Backend | 💻 Frontend |
+| 21기 | 21기 | 21기 | 21기 |
 
  
