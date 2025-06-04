@@ -47,7 +47,7 @@ main    ---●---●---●---------● abc (Squash Merge)
 | <img width="100" src="https://github.com/best11gh.png"> | <img width="100" src="https://github.com/dadaruda.png"> | <img width="100" src="https://github.com/betapa.png"> | <img width="100" src="https://github.com/FiveStarK.png"> |
 |:----------------------:|:----------------------:|:----------------------:|:----------------------:|
 | [이가현](https://github.com/best11gh) | [김다현](https://github.com/dadaruda) | [강태훈](https://github.com/betapa) | [권오성](https://github.com/FiveStarK) |
-| 💻 Backend | 💻 Frontend | 💻 Backend | 💻 Frontend |
+| 💻 Backend | 💻 Android | 💻 Backend | 💻 Android |
 | 21기 | 21기 | 21기 | 21기 |
 
  
