@@ -25,7 +25,11 @@ ex) frontend/wonseok/fix-login-not-allowed   (이슈가 없으면)
   - 브랜치명은 전부 소문자를 사용한다.
 
  ## 🍪 Pull Request
- ![image](https://github.com/user-attachments/assets/2171df3f-6b7b-4846-bb32-9b0ea9726d5c)  
+```
+main    ---●---●---●---------● abc (Squash Merge)
+                \           /
+개인브랜치          a---b---c   ('abc' 합쳐진 하나의 커밋으로 병합)
+```
 `main` 브랜치의 커밋은 Pull Request 단위로 쌓으며 이를 위해 **Squash Merge**를 원칙으로 합니다. **Squash Merge**는 브랜치가 병합될 때 커밋들이 PR 제목으로 합쳐지게 됩니다. 커밋은 개인마다 기준이 조금씩 다른 반면, PR/브랜치는 이슈 단위로 생성하므로 일관된 기준으로 커밋을 쌓을 수 있어 히스토리 추적을 용이하게 합니다.
 - 커밋 제목은 **PR 제목**으로 한다.
     - 작업 내용을 구체적으로 드러나게 적는다.
