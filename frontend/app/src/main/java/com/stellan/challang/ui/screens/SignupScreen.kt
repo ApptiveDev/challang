@@ -219,11 +219,11 @@ fun SignupScreen(
                     }
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color(0xFFFFDDBA),
+                    unfocusedContainerColor = Color(0xFFDDF0F0),
                     unfocusedBorderColor    = Color.Transparent,
-                    disabledContainerColor  = Color(0xFFFFDDBA),
+                    disabledContainerColor  = Color(0xFFDDF0F0),
                     disabledBorderColor     = Color.Transparent,
-                    focusedContainerColor   = Color(0xFFFFDDBA),
+                    focusedContainerColor   = Color(0xFFDDF0F0),
                     focusedBorderColor      = Color.Transparent,
                 )
             )
@@ -240,7 +240,7 @@ fun SignupScreen(
                 listOf("남성", "여성").forEach { option ->
                     val isSelected = gender == option
                     Surface(
-                        color = if (isSelected) Color(0xFFFFC283) else Color(0xFFFFDDBA),
+                        color = if (isSelected) Color(0xFFB2DADA) else Color(0xFFDDF0F0),
                         tonalElevation = if (gender == option) 4.dp else 0.dp,
                         shape = MaterialTheme.shapes.extraSmall,
                         modifier = Modifier
@@ -323,8 +323,8 @@ fun SignupScreen(
                     },
                     enabled = age >= 19,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFFC283),
-                        disabledContainerColor = Color(0xFFFFDDBA)
+                        containerColor = Color(0xFFB2DADA),
+                        disabledContainerColor = Color(0xFFDDF0F0)
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
