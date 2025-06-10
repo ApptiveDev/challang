@@ -29,7 +29,7 @@ fun BirthdayPicker(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .background(color = Color(0xFFFFDDBA), shape = RoundedCornerShape(6.dp)),
+            .background(color = Color(0xFFDDF0F0), shape = RoundedCornerShape(6.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
         WheelPicker(
