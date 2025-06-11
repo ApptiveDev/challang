@@ -1,5 +1,7 @@
 package com.challang.backend.auth.service;
 
+import com.challang.backend.auth.exception.AuthErrorCode;
+import com.challang.backend.global.exception.BaseException;
 import com.challang.backend.global.util.RedisUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -7,7 +9,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,7 @@ public class EmailVerificationService {
             helper.setText(content, true);
             mailSender.send(message);
         } catch (MessagingException e) {
-            throw new MailSendException("인증 이메일 전송 실패", e);
+            throw new BaseException(AuthErrorCode.MAIL_SEND_FAILED);
         }
     }
 
