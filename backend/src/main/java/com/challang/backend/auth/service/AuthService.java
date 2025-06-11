@@ -4,12 +4,10 @@ import com.challang.backend.auth.dto.request.*;
 import com.challang.backend.auth.dto.response.*;
 import com.challang.backend.auth.jwt.CustomUserDetails;
 import com.challang.backend.auth.jwt.JwtUtil;
+import com.challang.backend.global.exception.BaseException;
 import com.challang.backend.global.util.RedisUtil;
 import com.challang.backend.user.entity.User;
-import com.challang.backend.user.exception.UnderageException;
-import com.challang.backend.user.exception.UserAlreadyExistsException;
-import com.challang.backend.user.exception.UserNickNameAlreadyExistsException;
-import com.challang.backend.user.exception.UserNotFoundException;
+import com.challang.backend.user.exception.UserErrorCode;
 import com.challang.backend.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -51,7 +49,7 @@ public class AuthService {
         validateAdult(dto.birthDate());
 
         if (existsByEmail(dto.email())) {
-            throw new UserAlreadyExistsException("이미 등록된 계정입니다.");
+            throw new BaseException(UserErrorCode.USER_ALREADY_EXISTS);
         }
 
         String encodedPassword = passwordEncoder.encode(dto.password());
@@ -98,7 +96,7 @@ public class AuthService {
         String oauthId = userInfo.id().toString();
 
         if (existsByOauthId(oauthId)) {
-            throw new UserAlreadyExistsException("이미 등록된 계정입니다.");
+            throw new BaseException(UserErrorCode.USER_ALREADY_EXISTS);
         }
 
         User user = User.createWithOauth(
@@ -121,7 +119,7 @@ public class AuthService {
 
         // 2. 유저 조회
         User user = userRepository.findByOauthId(oauthId)
-                .orElseThrow(() -> new UserNotFoundException("등록되지 않은 카카오 계정입니다."));
+                .orElseThrow(() -> new BaseException(UserErrorCode.USER_NOT_FOUND, "등록되지 않은 카카오 계정입니다."));
 
         // 3. 인증 객체 생성
         CustomUserDetails userDetails = new CustomUserDetails(user);
@@ -179,7 +177,7 @@ public class AuthService {
     @Transactional
     public void deleteUser(final Long id, String refreshToken) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("존재하지 않는 계정입니다."));
+                .orElseThrow(() -> new BaseException(UserErrorCode.USER_NOT_FOUND));
 
         // TODO: 관련 데이터 모두 삭제
 
@@ -196,7 +194,7 @@ public class AuthService {
 
     private void validateAdult(LocalDate birthDate) {
         if (birthDate.plusYears(ADULT_AGE).isAfter(LocalDate.now())) {
-            throw new UnderageException(ADULT_AGE);
+            throw new BaseException(UserErrorCode.UNDERAGE_SIGNUP_NOT_ALLOWED);
         }
     }
 
