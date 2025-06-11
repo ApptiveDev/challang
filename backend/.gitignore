@@ -192,5 +192,5 @@ bin/
 /.nb-gradle/
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,visualstudiocode,gradle,java
-/.idea/misc.xml
-/.idea/vcs.xml
+.idea/
+/src/main/resources/application.yml
