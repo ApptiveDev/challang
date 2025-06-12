@@ -1,5 +1,6 @@
 package com.challang.backend.user.entity;
 
+import com.challang.backend.user.converter.UserRoleConverter;
 import com.challang.backend.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
@@ -33,7 +34,6 @@ public class User extends BaseEntity {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthDate;
 
-    // TODO: 프로필 엔티티를 따로 만들어서 뺄지 고민중
     @Column(name = "nickname", unique = true)
     private String nickname;
 
