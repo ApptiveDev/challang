@@ -18,9 +18,11 @@ public record LiquorResponse(
         String levelName,
         Long typeId,
         String typeName,
-        List<LiquorTagResponse> liquorTags
+        List<LiquorTagResponse> liquorTags,
+        double averageRating,
+        List<TagStatDto> topTagStats
 ) {
-    public static LiquorResponse fromEntity(Liquor liquor, String s3BaseUrl) {
+    public static LiquorResponse fromEntity(Liquor liquor, String s3BaseUrl, List<TagStatDto> topTagStats) {
         List<LiquorTagResponse> liquorTags = liquor.getLiquorTags().stream()
                 .map(LiquorTagResponse::fromEntity)
                 .toList();
@@ -40,8 +42,13 @@ public record LiquorResponse(
                 liquor.getLevel().getName(),
                 liquor.getType().getId(),
                 liquor.getType().getName(),
-                liquorTags
+                liquorTags,
+                liquor.getAverageRating(),
+                topTagStats
         );
     }
 
+    public static LiquorResponse fromEntity(Liquor liquor, String s3BaseUrl) {
+        return fromEntity(liquor, s3BaseUrl, List.of()); // topTagStats를 빈 리스트로 넘겨 호출
+    }
 }
