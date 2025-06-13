@@ -1,5 +1,6 @@
-package com.challang.backend.user.entity;
+package com.challang.backend.user.converter;
 
+import com.challang.backend.user.entity.UserRole;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
