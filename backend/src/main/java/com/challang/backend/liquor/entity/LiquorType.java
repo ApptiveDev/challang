@@ -1,5 +1,6 @@
 package com.challang.backend.liquor.entity;
 
+import com.challang.backend.liquor.dto.request.LiquorTypeRequest;
 import com.challang.backend.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,4 +18,11 @@ public class LiquorType extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;  // ex. 소주, 와인
 
+    public LiquorType(String name) {
+        this.name = name;
+    }
+
+    public void update(LiquorTypeRequest request) {
+        this.name = request.name();
+    }
 }
