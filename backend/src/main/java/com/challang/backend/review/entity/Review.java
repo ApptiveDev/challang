@@ -1,6 +1,7 @@
 package com.challang.backend.review.entity;
 
 import com.challang.backend.liquor.entity.Liquor;
+import com.challang.backend.liquor.entity.LiquorType;
 import com.challang.backend.user.entity.User;
 import com.challang.backend.util.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -24,7 +25,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "liquor_id", nullable = false)
-    private Liquor liquor;
+    private LiquorType liquor;
 
     @Column(name = "content", nullable = false)
     private String content;

@@ -10,10 +10,9 @@ import org.springframework.http.HttpStatusCode; // HttpStatus 대신 HttpStatusC
 @AllArgsConstructor
 public enum ReviewErrorCode implements ResponseStatus {
 
-    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, false, 4041, "해당 리뷰를 찾을 수 없습니다."),
-    NO_AUTHORITY_FOR_REVIEW(HttpStatus.FORBIDDEN, false, 4031, "해당 리뷰에 대한 수정/삭제 권한이 없습니다."),
-    LIQUOR_NOT_FOUND(HttpStatus.NOT_FOUND, false, 4042, "리뷰를 작성하려는 주류를 찾을 수 없습니다."),
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, false, 4043, "해당 유저가 없습니다");
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, false, 404, "해당 리뷰를 찾을 수 없습니다."),
+    NO_AUTHORITY_FOR_REVIEW(HttpStatus.FORBIDDEN, false, 403, "해당 리뷰에 대한 수정/삭제 권한이 없습니다."),
+    LIQUOR_NOT_FOUND(HttpStatus.NOT_FOUND, false, 404, "리뷰를 작성하려는 주류를 찾을 수 없습니다.");
 
     private final HttpStatusCode httpStatusCode; // HttpStatus -> HttpStatusCode 로 변경
     private final boolean isSuccess;
