@@ -1,5 +1,6 @@
 package com.challang.backend.tag.entity;
 
+import com.challang.backend.tag.dto.request.TagRequest;
 import com.challang.backend.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -18,4 +19,11 @@ public class Tag extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;  // ex. 드라이, 과일향, 오크향
 
+    public Tag(String name) {
+        this.name = name;
+    }
+
+    public void update(TagRequest request) {
+        this.name = request.name();
+    }
 }
