@@ -1,5 +1,7 @@
 package com.challang.backend.liquor.service;
 
+import static com.challang.backend.tag.constant.TagConstant.*;
+
 import com.challang.backend.global.exception.BaseException;
 import com.challang.backend.liquor.code.LiquorCode;
 import com.challang.backend.liquor.dto.request.*;
@@ -28,9 +30,6 @@ public class LiquorService {
     private final LiquorTypeRepository typeRepository;
     private final TagRepository tagRepository;
     private final LiquorTagRepository liquorTagRepository;
-
-    private static final int MIN_CORE_TAG = 2;
-    private static final int MAX_CORE_TAG = 4;
 
     // 주류 추가
     public LiquorResponse create(LiquorCreateRequest request) {
