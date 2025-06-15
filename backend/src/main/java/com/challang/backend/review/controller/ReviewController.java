@@ -1,10 +1,12 @@
 package com.challang.backend.review.controller;
 
+import com.challang.backend.auth.annotation.CurrentUser;
 import com.challang.backend.auth.jwt.CustomUserDetails;
 import com.challang.backend.review.dto.request.ReviewCreateRequestDto;
 import com.challang.backend.review.dto.request.ReviewUpdateRequestDto;
 import com.challang.backend.review.dto.response.ReviewResponseDto;
 import com.challang.backend.review.service.ReviewService;
+import com.challang.backend.user.entity.User;
 import com.challang.backend.util.response.BaseResponse; // BaseResponse import
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -38,9 +40,8 @@ public class ReviewController {
     public ResponseEntity<BaseResponse<ReviewResponseDto>> createReview(
             @PathVariable Long liquorId,
             @RequestBody ReviewCreateRequestDto request,
-            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails) {
-        ReviewResponseDto responseDto = reviewService.createReview(liquorId, request, userDetails.getUserId());
-        // BaseResponse 생성자를 직접 호출하여 성공 응답을 생성합니다.
+            @CurrentUser User user) {
+        ReviewResponseDto responseDto = reviewService.createReview(liquorId, request, user.getUserId());
         return ResponseEntity.ok(new BaseResponse<>(responseDto));
     }
 
@@ -51,7 +52,6 @@ public class ReviewController {
     @GetMapping("/liquors/{liquorId}/reviews")
     public ResponseEntity<BaseResponse<List<ReviewResponseDto>>> getReviews(@PathVariable Long liquorId) {
         List<ReviewResponseDto> responseDtoList = reviewService.getReviews(liquorId);
-        // BaseResponse 생성자를 직접 호출하여 성공 응답을 생성합니다.
         return ResponseEntity.ok(new BaseResponse<>(responseDtoList));
     }
 
@@ -67,9 +67,8 @@ public class ReviewController {
     public ResponseEntity<BaseResponse<ReviewResponseDto>> updateReview(
             @PathVariable Long reviewId,
             @RequestBody ReviewUpdateRequestDto request,
-            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails) {
-        ReviewResponseDto responseDto = reviewService.updateReview(reviewId, request, userDetails.getUserId());
-        // BaseResponse 생성자를 직접 호출하여 성공 응답을 생성합니다.
+            @CurrentUser User user) {
+        ReviewResponseDto responseDto = reviewService.updateReview(reviewId, request, user.getUserId());
         return ResponseEntity.ok(new BaseResponse<>(responseDto));
     }
 
@@ -82,12 +81,10 @@ public class ReviewController {
             @ApiResponse(responseCode = "404", description = "리뷰를 찾을 수 없음")
     })
     @DeleteMapping("/reviews/{reviewId}")
-    // 반환 타입의 제네릭을 <String>으로 변경하여 성공 메시지를 담습니다.
     public ResponseEntity<BaseResponse<String>> deleteReview(
             @PathVariable Long reviewId,
-            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails) {
-        reviewService.deleteReview(reviewId, userDetails.getUserId());
-        // AuthController의 logout과 같이, 성공 메시지를 담은 BaseResponse를 생성합니다.
+            @CurrentUser User user) {
+        reviewService.deleteReview(reviewId, user.getUserId());
         return ResponseEntity.ok(new BaseResponse<>("리뷰가 성공적으로 삭제되었습니다."));
     }
 }
