@@ -1,5 +1,9 @@
 package com.challang.backend.liquor.dto.request;
 
+import com.challang.backend.tag.dto.request.LiquorTagRequest;
+import jakarta.validation.Valid;
+import java.util.List;
+
 public record LiquorUpdateRequest(
 
         String name,
@@ -10,6 +14,7 @@ public record LiquorUpdateRequest(
         Double minAbv,
         Double maxAbv,
         Long levelId,
-        Long typeId
+        Long typeId,
+        List<@Valid LiquorTagRequest> liquorTags
 ) {
 }
