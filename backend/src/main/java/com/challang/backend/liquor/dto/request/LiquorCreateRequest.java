@@ -1,8 +1,10 @@
 package com.challang.backend.liquor.dto.request;
 
+import com.challang.backend.tag.dto.request.LiquorTagRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import java.util.List;
 
-// TODO: Tag 추가 예정
 public record LiquorCreateRequest(
 
         @NotBlank(message = "술 이름은 필수입니다.")
@@ -30,6 +32,10 @@ public record LiquorCreateRequest(
         Long levelId,
 
         @NotNull(message = "주종 ID는 필수입니다.")
-        Long typeId
+        Long typeId,
+
+        @NotNull(message = "태그 목록은 필수입니다.")
+        @Size(min = 1, message = "최소 한 개 이상의 태그를 선택해주세요.")
+        List<@Valid LiquorTagRequest> liquorTags
 ) {
 }

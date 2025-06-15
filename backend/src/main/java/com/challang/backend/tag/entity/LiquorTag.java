@@ -26,4 +26,10 @@ public class LiquorTag extends BaseEntity {
     @Column(name = "is_core", nullable = false)
     private boolean isCore; // 핵심적 태그인지
 
+    @Builder
+    public LiquorTag(Liquor liquor, Tag tag, boolean isCore) {
+        this.liquor = liquor;
+        this.tag = tag;
+        this.isCore = isCore;
+    }
 }

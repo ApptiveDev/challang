@@ -24,6 +24,9 @@ public enum LiquorCode implements ResponseStatus {
     // 도수 관련
     LIQUOR_LEVEL_DELETE_SUCCESS(HttpStatus.OK, true,200,"도수 등급이 성공적으로 삭제되었습니다."),
 
+    INVALID_ABV_RANGE(HttpStatus.BAD_REQUEST, false, 400, "최소 도수는 최대 도수보다 작아야 합니다."),
+    INVALID_ABV_VALUE(HttpStatus.BAD_REQUEST, false, 400, "도수는 0 이상 100 이하의 값이어야 합니다."),
+
     LIQUOR_LEVEL_NOT_FOUND(HttpStatus.NOT_FOUND, false,404,"해당 도수 등급을 찾을 수 없습니다."),
     LIQUOR_LEVEL_ALREADY_EXISTS(HttpStatus.CONFLICT, false,409,"이미 존재하는 도수 등급입니다.");
 
