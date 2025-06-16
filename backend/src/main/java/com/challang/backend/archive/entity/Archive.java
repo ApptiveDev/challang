@@ -24,4 +24,10 @@ public class Archive extends BaseEntity {
     @JoinColumn(name = "liquor_id", nullable = false)
     private Liquor liquor;
 
+
+    @Builder
+    public Archive(User user, Liquor liquor) {
+        this.user = user;
+        this.liquor = liquor;
+    }
 }
