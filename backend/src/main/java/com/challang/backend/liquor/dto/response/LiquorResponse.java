@@ -1,8 +1,10 @@
 package com.challang.backend.liquor.dto.response;
 
 import com.challang.backend.liquor.entity.Liquor;
+import com.challang.backend.tag.dto.response.LiquorTagResponse;
+import java.util.List;
 
-// TODO: Tag 추가 예정
+
 public record LiquorResponse(
         Long id,
         String name,
@@ -15,9 +17,14 @@ public record LiquorResponse(
         Long levelId,
         String levelName,
         Long typeId,
-        String typeName
+        String typeName,
+        List<LiquorTagResponse> liquorTags
 ) {
     public static LiquorResponse fromEntity(Liquor liquor) {
+        List<LiquorTagResponse> liquorTags = liquor.getLiquorTags().stream()
+                .map(LiquorTagResponse::fromEntity)
+                .toList();
+
         return new LiquorResponse(
                 liquor.getId(),
                 liquor.getName(),
@@ -30,7 +37,8 @@ public record LiquorResponse(
                 liquor.getLevel().getId(),
                 liquor.getLevel().getName(),
                 liquor.getType().getId(),
-                liquor.getType().getName()
+                liquor.getType().getName(),
+                liquorTags
         );
     }
 

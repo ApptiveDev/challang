@@ -1,4 +1,4 @@
-package com.challang.backend.user.preference.entity;
+package com.challang.backend.preference.entity;
 
 import com.challang.backend.tag.entity.Tag;
 import com.challang.backend.user.entity.User;
@@ -24,4 +24,9 @@ public class LiquorPreferenceTag extends BaseEntity {
     @JoinColumn(name = "tag_id", nullable = false)
     private Tag tag;
 
+    @Builder
+    public LiquorPreferenceTag(User user, Tag tag) {
+        this.user = user;
+        this.tag = tag;
+    }
 }

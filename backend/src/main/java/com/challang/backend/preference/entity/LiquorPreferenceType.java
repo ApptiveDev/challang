@@ -1,16 +1,16 @@
-package com.challang.backend.user.preference.entity;
+package com.challang.backend.preference.entity;
 
-import com.challang.backend.liquor.entity.LiquorLevel;
+import com.challang.backend.liquor.entity.LiquorType;
 import com.challang.backend.user.entity.User;
 import com.challang.backend.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "user_liquor_preference_level")
+@Table(name = "user_liquor_preference_type")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LiquorPreferenceLevel extends BaseEntity {
+public class LiquorPreferenceType extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,12 @@ public class LiquorPreferenceLevel extends BaseEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "liquor_level_id", nullable = false)
-    private LiquorLevel liquorLevel;
+    @JoinColumn(name = "liquor_type_id", nullable = false)
+    private LiquorType liquorType;
 
+    @Builder
+    public LiquorPreferenceType(User user, LiquorType liquorType) {
+        this.user = user;
+        this.liquorType = liquorType;
+    }
 }
