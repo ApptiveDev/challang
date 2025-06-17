@@ -6,15 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.stellan.challang.ui.screens.HomeScreen
-import com.stellan.challang.ui.screens.LoginScreen
-import com.stellan.challang.ui.screens.SignupScreen
-import com.stellan.challang.ui.screens.ProfilesetScreen
+import com.stellan.challang.ui.screens.*
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavHost(navController: NavHostController) {
     NavHost(navController, startDestination = "login") {
+
         composable("login") {
             LoginScreen(
                 onLoginSuccess = {
@@ -42,7 +41,25 @@ fun AppNavHost(navController: NavHostController) {
         }
 
         composable("home") {
-            HomeScreen()
+            HomeScreen(navController)
         }
+
+        composable("help") {
+            HelpScreen(navController)
+        }
+
+        composable("privacy") {
+            PrivacyPolicyScreen(navController)
+        }
+
+        composable("terms") {
+            TermsOfServiceScreen(navController)
+        }
+
+
+        composable("withdraw") {
+            WithdrawScreen(navController) }
     }
+
+
 }

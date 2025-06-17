@@ -1,8 +1,8 @@
 package com.challang.backend.auth.service;
 
 import com.challang.backend.auth.dto.response.*;
-import com.challang.backend.auth.exception.InvalidAccessTokenException;
-import com.challang.backend.auth.exception.KakaoServerException;
+import com.challang.backend.auth.exception.AuthErrorCode;
+import com.challang.backend.global.exception.BaseException;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -44,9 +43,9 @@ public class KakaoService {
                 .header(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_X_WWW_FORM_URLENCODED.toString())
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError,
-                        clientResponse -> Mono.error(new InvalidAccessTokenException("잘못된 액세스 토큰입니다.")))
+                        clientResponse -> Mono.error(new BaseException(AuthErrorCode.INVALID_KAKAO_ACCESS_TOKEN)))
                 .onStatus(HttpStatusCode::is5xxServerError,
-                        clientResponse -> Mono.error(new KakaoServerException("카카오 서버 내부 오류입니다.")))
+                        clientResponse -> Mono.error(new BaseException(AuthErrorCode.KAKAO_SERVER_ERROR)))
                 .bodyToMono(KakaoUserInfoResponseDto.class)
                 .block();
     }
