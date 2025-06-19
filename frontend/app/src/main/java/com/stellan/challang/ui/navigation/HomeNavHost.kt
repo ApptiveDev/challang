@@ -14,7 +14,7 @@ fun HomeNavHost(
     when (tab) {
         "home" -> HomeMainScreen()
         "mypage" -> MyPageScreen(parentNavController)
-        "archive" -> {
+        "drinks" -> {
             // 아직 미구현
             Text("아카이브는 준비 중입니다!")
         }
