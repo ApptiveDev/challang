@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -41,8 +40,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.filled.ArrowBack
-
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
 
 
 @Composable
@@ -108,7 +107,7 @@ fun MyPageScreen(navController: NavController) {
                     color = Color(0xFFE8F1F1),
                     modifier = Modifier.size(72.dp)
                 ) {
-                    Icon( //임시
+                    Icon(
                         imageVector = Icons.Default.AccountCircle,
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize().padding(10.dp),
@@ -118,22 +117,36 @@ fun MyPageScreen(navController: NavController) {
             }
         }
         Spacer(modifier = Modifier.height(40.dp))
-        Divider(thickness = 4.dp, color = Color(0xFFE3F0F0))
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = 4.dp,
+            color = Color(0xFFE3F0F0)
+        )
         Column(modifier = Modifier.fillMaxWidth()) {
             MyPageItem(text = "도움말") {
                 navController.navigate("help")
             }
-            Divider(thickness = 1.dp, color = Color(0xFFE3F0F0))
-
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth(),
+                thickness = 1.dp,
+                color = Color(0xFFE3F0F0)
+            )
             MyPageItem(text = "로그아웃") {
                 showLogoutDialog = true
             }
-            Divider(thickness = 1.dp, color = Color(0xFFE3F0F0))
-
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth(),
+                thickness = 1.dp,
+                color = Color(0xFFE3F0F0)
+            )
             MyPageItem(text = "회원탈퇴") {
                 navController.navigate("withdraw")
             }
-            Divider(thickness = 1.dp, color = Color(0xFFE3F0F0))
+            HorizontalDivider(
+                modifier = Modifier.fillMaxWidth(),
+                thickness = 1.dp,
+                color = Color(0xFFE3F0F0)
+            )
         }
     }
 
@@ -214,13 +227,20 @@ fun HelpScreen(navController: NavController) {
             text = "개인정보처리방침",
             onClick = { navController.navigate("privacy") }
         )
-        Divider(thickness = 1.dp, color = Color(0xFFE3F0F0))
-
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = 1.dp,
+            color = Color(0xFFE3F0F0)
+        )
         HelpItem(
             text = "서비스 이용약관",
             onClick = { navController.navigate("terms") }
         )
-        Divider(thickness = 1.dp, color = Color(0xFFE3F0F0))
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = 1.dp,
+            color = Color(0xFFE3F0F0)
+        )
     }
 }
 
@@ -279,7 +299,7 @@ fun PrivacyPolicyScreen(navController: NavHostController) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "뒤로가기"
                         )
                     }
@@ -338,7 +358,7 @@ fun TermsOfServiceScreen(navController: NavHostController) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "뒤로가기"
                         )
                     }
@@ -507,7 +527,7 @@ fun ShowLoggedOutDialog(
 @Composable
 fun WithdrawScreen(navController: NavHostController) {
 
-    var step by rememberSaveable { mutableStateOf(1) }
+    var step by rememberSaveable { mutableIntStateOf(1) }
     var selectedReason by rememberSaveable { mutableStateOf<String?>(null) }
     var agree by rememberSaveable { mutableStateOf(false) }
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
