@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.stellan.challang.ui.screens.*
+import com.stellan.challang.ui.screen.*
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -33,7 +33,7 @@ fun AppNavHost(navController: NavHostController) {
         }
 
         composable("profileset") {
-            ProfilesetScreen(onProfileComplete = {
+            ProfileSettingScreen(onProfileComplete = {
                 navController.navigate("home") {
                     popUpTo("profileset") { inclusive = true }
                 }

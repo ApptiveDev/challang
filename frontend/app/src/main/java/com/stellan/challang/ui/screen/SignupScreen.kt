@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screens
+package com.stellan.challang.ui.screen
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.stellan.challang.R
-import com.stellan.challang.ui.components.BirthdayPicker
+import com.stellan.challang.ui.component.BirthdayPicker
 import java.util.*
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState

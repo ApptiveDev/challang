@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screens
+package com.stellan.challang.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.stellan.challang.R
-import com.stellan.challang.ui.components.SpeechBubble
+import com.stellan.challang.ui.component.SpeechBubble
 import com.stellan.challang.ui.theme.PaperlogyFamily
 
 @Composable

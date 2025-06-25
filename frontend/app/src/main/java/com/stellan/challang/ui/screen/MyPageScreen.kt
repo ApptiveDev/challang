@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screens
+package com.stellan.challang.ui.screen
 
 import android.content.Context
 import androidx.compose.foundation.background
@@ -640,7 +640,6 @@ fun WithdrawScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // ✅ 위쪽 내용은 Column
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -731,7 +730,9 @@ fun WithdrawScreen(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(20.dp))
                 Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        text = "탈퇴 시 계정 및 개인정보와 이용 기록이 모두 삭제되며\n삭제된 데이터는 복구가 불가능합니다.\n또한 연속적인 탈퇴 후 재가입 시 이용에\n 제한을 받을 수 있습니다.",
+                        text = "탈퇴 시 계정 및 개인정보와 이용 기록이 모두 삭제되며\n" +
+                                "삭제된 데이터는 복구가 불가능합니다.\n" +
+                                "또한 연속적인 탈퇴 후 재가입 시 이용에\n 제한을 받을 수 있습니다.",
                         fontFamily = PaperlogyFamily,
                         fontSize = 12.sp,
                         color = Color.Black,
@@ -848,7 +849,10 @@ fun WithdrawConfirmDialog(
                             .padding(vertical = 16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("취소", fontFamily = PaperlogyFamily, fontWeight = FontWeight.Bold, color = Color.Black)
+                        Text("취소",
+                            fontFamily = PaperlogyFamily,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black)
                     }
                     Box(
                         modifier = Modifier
@@ -858,7 +862,10 @@ fun WithdrawConfirmDialog(
                             .padding(vertical = 16.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("확인", fontFamily = PaperlogyFamily, fontWeight = FontWeight.Bold, color = Color.Black)
+                        Text("확인",
+                            fontFamily = PaperlogyFamily,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black)
                     }
                 }
             }
