@@ -28,8 +28,7 @@ public class Liquor extends BaseEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    // TODO: 나중에 이미지 추가
-    @Column(name = "image_url")
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @Column(name = "base", nullable = false)

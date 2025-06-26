@@ -20,15 +20,17 @@ public record LiquorResponse(
         String typeName,
         List<LiquorTagResponse> liquorTags
 ) {
-    public static LiquorResponse fromEntity(Liquor liquor) {
+    public static LiquorResponse fromEntity(Liquor liquor, String s3BaseUrl) {
         List<LiquorTagResponse> liquorTags = liquor.getLiquorTags().stream()
                 .map(LiquorTagResponse::fromEntity)
                 .toList();
 
+        String fullImageUrl = s3BaseUrl + "/" + liquor.getImageUrl();
+
         return new LiquorResponse(
                 liquor.getId(),
                 liquor.getName(),
-                liquor.getImageUrl(),
+                fullImageUrl,
                 liquor.getBase(),
                 liquor.getOrigin(),
                 liquor.getColor(),
