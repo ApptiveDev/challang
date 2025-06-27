@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -25,7 +24,7 @@ import com.stellan.challang.ui.theme.PaperlogyFamily
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    val tabs = listOf( "home", "search", "archive", "mypage")
+    val tabs = listOf( "home", "archive", "mypage")
     var selectedTab by remember { mutableStateOf("home") }
 
     Scaffold(
@@ -47,7 +46,6 @@ fun HomeScreen(navController: NavController) {
                             Icon(
                                 imageVector = when(tab) {
                                     "home"   -> Icons.Outlined.Home
-                                    "search" -> Icons.Default.Search
                                     "archive" -> Icons.Outlined.BookmarkBorder
                                     "mypage" -> Icons.Default.Menu
                                     else     -> Icons.Outlined.Home
@@ -91,7 +89,6 @@ fun HomeScreen(navController: NavController) {
 
 fun tabToLabel(tab: String): String = when (tab) {
     "home" -> "Home"
-    "search" -> "Search"
     "archive" -> "Archive"
     "mypage" -> "My Page"
     else -> tab

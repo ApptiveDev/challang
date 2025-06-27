@@ -5,7 +5,6 @@ import androidx.navigation.NavController
 import com.stellan.challang.ui.screen.ArchiveScreen
 import com.stellan.challang.ui.screen.CuratingScreen
 import com.stellan.challang.ui.screen.MyPageScreen
-import com.stellan.challang.ui.screen.SearchScreen
 
 @Composable
 fun HomeNavHost(
@@ -16,6 +15,5 @@ fun HomeNavHost(
         "home" -> CuratingScreen()
         "mypage" -> MyPageScreen(parentNavController)
         "archive" -> ArchiveScreen()
-        "search" -> SearchScreen()
     }
 }
