@@ -8,14 +8,17 @@ import com.challang.backend.liquor.dto.request.*;
 import com.challang.backend.liquor.dto.response.*;
 import com.challang.backend.liquor.entity.*;
 import com.challang.backend.liquor.repository.*;
+import com.challang.backend.review.repository.ReviewRepository;
 import com.challang.backend.tag.code.TagCode;
 import com.challang.backend.tag.dto.request.LiquorTagRequest;
 import com.challang.backend.tag.entity.*;
 import com.challang.backend.tag.repository.*;
+import com.challang.backend.util.aws.service.S3Service;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,11 @@ public class LiquorService {
     private final LiquorTypeRepository typeRepository;
     private final TagRepository tagRepository;
     private final LiquorTagRepository liquorTagRepository;
+    private final ReviewRepository reviewRepository;
+    private final S3Service s3Service;
+
+    @Value("${cloud.aws.s3.url}")
+    private String s3BaseUrl;
 
     // 주류 추가
     public LiquorResponse create(LiquorCreateRequest request) {
@@ -49,6 +57,7 @@ public class LiquorService {
                 .maxAbv(request.maxAbv())
                 .level(level)
                 .type(type)
+                .imageUrl(request.imageUrl())
                 .build();
         Liquor saved = liquorRepository.save(liquor);
 
@@ -58,13 +67,13 @@ public class LiquorService {
         // saved.getLiquorTags().addAll(tags); // 같은 트랜잭션 내 사용 시 필수
         liquorTagRepository.saveAll(tags);
 
-        return LiquorResponse.fromEntity(saved);
+        return LiquorResponse.fromEntity(saved, s3BaseUrl);
     }
 
     // 주류 단건 조회
     @Transactional(readOnly = true)
     public LiquorResponse findById(Long id) {
-        return LiquorResponse.fromEntity(getLiquorById(id));
+        return LiquorResponse.fromEntity(getLiquorById(id), s3BaseUrl);
     }
 
     // 주류 전체 조회
@@ -82,7 +91,8 @@ public class LiquorService {
         String nextCursor = hasNext ? liquors.get(pageSize - 1).getName() : null;
 
         return new LiquorListResponse(
-                liquors.stream().map(LiquorResponse::fromEntity).toList(),
+                liquors.stream()
+                        .map(liquor -> LiquorResponse.fromEntity(liquor, s3BaseUrl)).toList(),
                 nextCursor,
                 hasNext
         );
@@ -124,12 +134,16 @@ public class LiquorService {
             liquorTagRepository.saveAll(updatedTags);
         }
 
-        return LiquorResponse.fromEntity(liquor);
+        return LiquorResponse.fromEntity(liquor, s3BaseUrl);
     }
 
     public void delete(Long id) {
         Liquor liquor = getLiquorById(id);
-        liquorTagRepository.deleteByLiquorId(liquor.getId());
+
+        liquorTagRepository.deleteAll(liquor.getLiquorTags());
+        reviewRepository.deleteByLiquorId(liquor.getId());
+        s3Service.deleteByKey(liquor.getImageUrl());
+
         liquorRepository.delete(liquor);
     }
 
@@ -153,7 +167,7 @@ public class LiquorService {
                 .toList();
     }
 
-    private static void validateCoreTagCount(List<LiquorTagRequest> liquorTagRequests) {
+    private void validateCoreTagCount(List<LiquorTagRequest> liquorTagRequests) {
         long tagCount = liquorTagRequests.stream().filter(LiquorTagRequest::isCore).count();
 
         if (tagCount < MIN_CORE_TAG || tagCount > MAX_CORE_TAG) {

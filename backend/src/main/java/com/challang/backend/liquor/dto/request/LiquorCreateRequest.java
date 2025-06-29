@@ -10,7 +10,7 @@ public record LiquorCreateRequest(
         @NotBlank(message = "술 이름은 필수입니다.")
         String name,
 
-        // TODO: 나중에 필수로 추가하기
+        @NotBlank(message = "술 이미지는 필수입니다.")
         String imageUrl,
 
         @NotBlank(message = "베이스는 필수입니다. 어떤 원료로 만들어졌는지 입력해주세요. (예: 쌀, 보리 등)")

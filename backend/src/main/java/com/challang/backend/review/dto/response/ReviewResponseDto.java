@@ -8,15 +8,17 @@ public record ReviewResponseDto(
         Long writerId,
         String writerNickname,
         String content,
+        String imageUrl,
         LocalDateTime createdAt
 ) {
-    // Entity를 DTO로 변환하는 정적 팩토리 메서드
-    public static ReviewResponseDto from(Review review) {
+    public static ReviewResponseDto from(Review review, String s3BaseUrl) {
+        String fullImageUrl = s3BaseUrl + "/" + review.getImageUrl();
         return new ReviewResponseDto(
                 review.getId(),
                 review.getWriter().getUserId(),
                 review.getWriter().getNickname(),
                 review.getContent(),
+                fullImageUrl,
                 review.getCreatedAt()
         );
     }
