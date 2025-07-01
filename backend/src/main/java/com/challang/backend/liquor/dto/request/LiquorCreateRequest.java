@@ -13,8 +13,8 @@ public record LiquorCreateRequest(
         @NotBlank(message = "술 이미지는 필수입니다.")
         String imageUrl,
 
-        @NotBlank(message = "베이스는 필수입니다. 어떤 원료로 만들어졌는지 입력해주세요. (예: 쌀, 보리 등)")
-        String base,
+        @NotBlank(message = "테이스팅 노트는 필수입니다. 술의 주요 향미나 특징을 입력해주세요.")
+        String tastingNote,
 
         @NotBlank(message = "유래는 필수입니다. 간략한 술의 역사나 기원을 입력해주세요.")
         String origin,
