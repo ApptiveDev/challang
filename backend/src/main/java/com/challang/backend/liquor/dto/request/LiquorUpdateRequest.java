@@ -8,7 +8,7 @@ public record LiquorUpdateRequest(
 
         String name,
         String imageUrl,
-        String base,
+        String tastingNote,
         String origin,
         String color,
         Double minAbv,
