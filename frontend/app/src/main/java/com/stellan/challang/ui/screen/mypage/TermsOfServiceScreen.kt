@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.stellan.challang.ui.theme.PaperlogyFamily
 import com.stellan.challang.ui.util.loadTextFromAsset
 
