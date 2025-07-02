@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screen
+package com.stellan.challang.ui.screen.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

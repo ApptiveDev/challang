@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screen
+package com.stellan.challang.ui.screen.archive
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CuratingScreen() {
+fun ArchiveScreen() {
     var text by rememberSaveable { mutableStateOf("") }
     var expanded by rememberSaveable { mutableStateOf(false) }
 

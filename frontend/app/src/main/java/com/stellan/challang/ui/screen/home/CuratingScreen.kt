@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screen
+package com.stellan.challang.ui.screen.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,13 +37,15 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArchiveScreen() {
+fun CuratingScreen() {
     var text by rememberSaveable { mutableStateOf("") }
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     Box(Modifier.fillMaxSize().semantics { isTraversalGroup = true }) {
         SearchBar(
-            modifier = Modifier.align(Alignment.TopCenter).semantics { traversalIndex = 0f },
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .semantics { traversalIndex = 0f },
             inputField = {
                 SearchBarDefaults.InputField(
                     query = text,
@@ -51,13 +53,15 @@ fun ArchiveScreen() {
                     onSearch = { expanded = false },
                     expanded = expanded,
                     onExpandedChange = { expanded = it },
-                    placeholder = { Text("Hinted search text") },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                    trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+                    trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 )
             },
             expanded = expanded,
             onExpandedChange = { expanded = it },
+            colors = SearchBarDefaults.colors(
+                containerColor = Color(0xFFCEEFF2)
+            ),
+            shape = RoundedCornerShape(8.dp)
         ) {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 repeat(4) { idx ->

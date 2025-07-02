@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screen
+package com.stellan.challang.ui.screen.auth
 
 import android.os.Build
 import androidx.annotation.RequiresApi
