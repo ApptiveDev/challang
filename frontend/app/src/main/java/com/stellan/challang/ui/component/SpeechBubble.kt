@@ -1,5 +1,5 @@
 
-package com.stellan.challang.ui.components
+package com.stellan.challang.ui.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.GenericShape

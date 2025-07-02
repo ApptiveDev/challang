@@ -31,8 +31,8 @@ public class Liquor extends BaseEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @Column(name = "base", nullable = false)
-    private String base;
+    @Column(name = "tasting_note", nullable = false)
+    private String tastingNote;
 
     @Column(name = "origin", nullable = false)
     private String origin;
@@ -51,13 +51,13 @@ public class Liquor extends BaseEntity {
 
 
     @Builder
-    public Liquor(LiquorLevel level, LiquorType type, String name, String imageUrl, String base, String origin,
+    public Liquor(LiquorLevel level, LiquorType type, String name, String imageUrl, String tastingNote, String origin,
                   String color, Double minAbv, Double maxAbv) {
         this.level = level;
         this.type = type;
         this.name = name;
         this.imageUrl = imageUrl;
-        this.base = base;
+        this.tastingNote = tastingNote;
         this.origin = origin;
         this.color = color;
         this.minAbv = minAbv;
@@ -68,8 +68,8 @@ public class Liquor extends BaseEntity {
         if (request.name() != null) {
             this.name = request.name();
         }
-        if (request.base() != null) {
-            this.base = request.base();
+        if (request.tastingNote() != null) {
+            this.tastingNote = request.tastingNote();
         }
         if (request.origin() != null) {
             this.origin = request.origin();

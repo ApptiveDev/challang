@@ -50,7 +50,7 @@ public class LiquorService {
 
         Liquor liquor = Liquor.builder()
                 .name(request.name())
-                .base(request.base())
+                .tastingNote(request.tastingNote())
                 .origin(request.origin())
                 .color(request.color())
                 .minAbv(request.minAbv())
