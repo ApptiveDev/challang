@@ -1,4 +1,4 @@
-package com.stellan.challang.ui.screens
+package com.stellan.challang.ui.screen.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,7 +49,7 @@ import androidx.compose.animation.core.*
 import kotlin.math.*
 
 @Composable
-fun ProfilesetScreen(
+fun ProfileSettingScreen(
     onProfileComplete: () -> Unit
 ) {
     var step by remember { mutableIntStateOf(1) }
@@ -330,8 +330,9 @@ fun ProfileStepTwo(
 fun ProfileStepThree(
     onNext: () -> Unit
 ) {
-    val alcoholOptions = listOf("깔끔한", "부드러운", "드라이", "과일향", "오크향", "가벼운 오크향", "허브향", "톡 쏘는", "진한 바디감",
-        "캐러맬", "가벼운 바디감", "꽃향", "발포성", "초콜릿향", "달콤한 여운", "짭짤한", "견과류향", "은은한 곡물향", "달콤한", "부드러운 목넘김")
+    val alcoholOptions = listOf("깔끔한", "부드러운", "드라이", "과일향", "오크향", "가벼운 오크향", "허브향",
+        "톡 쏘는", "진한 바디감", "캐러맬", "가벼운 바디감", "꽃향", "발포성", "초콜릿향", "달콤한 여운", "짭짤한",
+        "견과류향", "은은한 곡물향", "달콤한", "부드러운 목넘김")
     val selectedOptions = remember { mutableStateListOf<String>() }
     val isSelectionEnough = selectedOptions.size >= 5
 
@@ -378,8 +379,8 @@ fun ProfileStepThree(
 
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(-8.dp, Alignment.Start), // ✅ 간격 + 왼쪽정렬
-                verticalArrangement = Arrangement.spacedBy(-6.dp)
+                horizontalArrangement = Arrangement.spacedBy((-8).dp, Alignment.Start),
+                verticalArrangement = Arrangement.spacedBy((-6).dp)
             ) {
                 alcoholOptions.forEach { option ->
                     val isSelected = selectedOptions.contains(option)
@@ -433,7 +434,8 @@ fun ProfileStepThree(
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isSelectionEnough) Color(0xFFB2DADA) else Color(0xFFDDF0F0)
+                        containerColor = if (isSelectionEnough) Color(0xFFB2DADA)
+                        else Color(0xFFDDF0F0)
                     ),
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
@@ -526,7 +528,6 @@ fun ProfileStepFour(
                     .padding(80.dp),
                 contentAlignment = Alignment.Center
             ) {
-                // 🎈 흔들리는 버블 4개
                 val wiggleX = 5.dp * cos(phase)
                 val wiggleY = 5.dp * sin(phase)
 
