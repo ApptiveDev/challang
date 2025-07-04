@@ -32,8 +32,8 @@ public record ReviewResponseDto(
                 fullImageUrl,
                 review.getCreatedAt(),
                 review.getRating(),
-                review.getLikeCount(),
-                review.getDislikeCount(),
+                review.getLikeCount() != null ? review.getLikeCount() : 0,
+                review.getDislikeCount() != null ? review.getDislikeCount() : 0,
                 tagNames
         );
     }

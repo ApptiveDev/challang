@@ -39,16 +39,15 @@ public class Review extends BaseEntity {
     @Column(name = "rating", nullable = false)
     private Double rating;
 
-    @Builder.Default
     @Column(name = "like_count")
-    private int likeCount = 0;
+    private Integer likeCount = 0;
 
-    @Builder.Default
     @Column(name = "dislike_count")
-    private int dislikeCount = 0;
+    private Integer dislikeCount = 0;
 
-    // 리뷰에 선택된 해시태그 목록
-    @Builder.Default
+    @Column(name = "report_count")
+    private Integer reportCount = 0;
+
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewTag> reviewTags = new ArrayList<>();
 
@@ -73,6 +72,10 @@ public class Review extends BaseEntity {
     public void decreaseReactionCount(ReactionType reactionType) {
         if (reactionType == ReactionType.LIKE) this.likeCount--;
         else this.dislikeCount--;
+    }
+
+    public void increaseReportCount() {
+        this.reportCount++;
     }
 
     public void changeReaction(ReactionType from, ReactionType to) {

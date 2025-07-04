@@ -7,12 +7,10 @@ import com.challang.backend.liquor.repository.LiquorRepository;
 import com.challang.backend.liquor.service.LiquorService;
 import com.challang.backend.review.dto.request.*;
 import com.challang.backend.review.dto.response.*;
-import com.challang.backend.review.entity.ReactionType;
-import com.challang.backend.review.entity.Review;
-import com.challang.backend.review.entity.ReviewReaction;
-import com.challang.backend.review.entity.ReviewTag;
+import com.challang.backend.review.entity.*;
 import com.challang.backend.review.exception.ReviewErrorCode;
 import com.challang.backend.review.repository.ReviewReactionRepository;
+import com.challang.backend.review.repository.ReviewReportRepository;
 import com.challang.backend.review.repository.ReviewRepository;
 import com.challang.backend.review.repository.ReviewTagRepository;
 import com.challang.backend.tag.entity.Tag;
@@ -45,6 +43,7 @@ public class ReviewService {
     private final TagRepository tagRepository;
     private final ReviewTagRepository reviewTagRepository;
     private final ReviewReactionRepository reviewReactionRepository;
+    private final ReviewReportRepository reviewReportRepository;
     private final S3Service s3Service;
     private final LiquorService liquorService;
 
@@ -63,6 +62,9 @@ public class ReviewService {
         // 2. Liquor 정보 조회
         Liquor liquor = liquorRepository.findById(liquorId)
                 .orElseThrow(() -> new BaseException(LiquorCode.LIQUOR_NOT_FOUND));
+
+        validateTagCount(request.tagIds());
+
 
         // 3. Review 엔티티 생성
         Review review = Review.builder()
@@ -105,6 +107,8 @@ public class ReviewService {
     @Transactional
     public ReviewResponseDto updateReview(Long reviewId, ReviewUpdateRequestDto request, User user) {
         Review review = findReview(reviewId, user.getUserId());
+
+        validateTagCount(request.tagIds());
 
         if (request.imageUrl() != null && !Objects.equals(review.getImageUrl(), request.imageUrl())) {
             s3Service.deleteByKey(review.getImageUrl());
@@ -150,10 +154,25 @@ public class ReviewService {
     }
 
     @Transactional
-    public void reportReview(Long reviewId, User user) {
+    public void reportReview(Long reviewId, ReportRequestDto request, User user) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new BaseException(ReviewErrorCode.REVIEW_NOT_FOUND));
-        //TODO : 신고 중복 방지 및 카운트 증가 로직 구현
+
+        // 1. 중복 신고 확인
+        if (reviewReportRepository.existsByUserAndReview(user, review)) {
+            throw new BaseException(ReviewErrorCode.ALREADY_REPORTED);
+        }
+
+        // 2. 신고 기록 저장
+        ReviewReport report = ReviewReport.builder()
+                .user(user)
+                .review(review)
+                .reason(request.reason())
+                .build();
+        reviewReportRepository.save(report);
+
+        // 3. 리뷰의 신고 카운트 증가
+        review.increaseReportCount();
     }
 
     private Review findReview(Long reviewId, Long userId) {
@@ -205,5 +224,12 @@ public class ReviewService {
                             review.increaseReactionCount(reactionType);
                         }
                 );
+    }
+
+    private void validateTagCount(List<Long> tagIds) {
+        // 태그 목록이 null이 아니고, 리스트의 크기가 3보다 크면 예외 발생
+        if (tagIds != null && tagIds.size() > 3) {
+            throw new BaseException(ReviewErrorCode.MAX_TAGS_EXCEEDED);
+        }
     }
 }

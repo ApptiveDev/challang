@@ -6,7 +6,7 @@ import com.challang.backend.review.dto.request.ReviewUpdateRequestDto;
 import com.challang.backend.review.dto.response.ReviewResponseDto;
 import com.challang.backend.review.service.ReviewService;
 import com.challang.backend.user.entity.User;
-import com.challang.backend.util.response.BaseResponse; // BaseResponse import
+import com.challang.backend.util.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,6 +19,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.challang.backend.review.dto.request.ReportRequestDto;
+import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
 import java.util.List;
@@ -56,9 +58,9 @@ public class ReviewController {
     public ResponseEntity<BaseResponse<Page<ReviewResponseDto>>> getReviews(
             @Parameter(description = "주류 ID") @PathVariable Long liquorId,
             @Parameter(description = "필터링할 태그 ID 목록") @RequestParam(required = false) List<Long> tagIds,
-            @Parameter(hidden = true)
+            @Parameter(description = "정렬 조건 (예: 'createdAt,desc' 또는 'likeCount,desc')")
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        // 서비스 메서드가 Page 객체를 반환하도록 변경
+
         Page<ReviewResponseDto> responsePage = reviewService.getReviewsByLiquor(liquorId, tagIds, pageable);
         return ResponseEntity.ok(new BaseResponse<>(responsePage));
     }
@@ -137,8 +139,10 @@ public class ReviewController {
     @PostMapping("/reviews/{reviewId}/report")
     public ResponseEntity<BaseResponse<String>> reportReview(
             @PathVariable Long reviewId,
+            @Valid @RequestBody ReportRequestDto request,
             @CurrentUser User user) {
-        reviewService.reportReview(reviewId, user);
+
+        reviewService.reportReview(reviewId, request, user);
         return ResponseEntity.ok(new BaseResponse<>("신고가 접수되었습니다."));
     }
 }

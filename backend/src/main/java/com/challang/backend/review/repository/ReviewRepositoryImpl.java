@@ -1,7 +1,6 @@
 package com.challang.backend.review.repository;
 
 import com.challang.backend.review.entity.QReview;
-import com.challang.backend.review.entity.QReviewTag;
 import com.challang.backend.review.entity.Review;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -12,7 +11,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable; // ❗ AWT가 아닌 Spring의 Pageable로 수정
-import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +18,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ReviewRepositoryImpl implements ReviewRepositoryCustom { // ❗ 파일명을 ReviewRepositoryImpl.java로 유지
+public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
