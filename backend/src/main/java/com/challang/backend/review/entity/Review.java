@@ -7,6 +7,9 @@ import com.challang.backend.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "review")
 @Getter
@@ -33,14 +36,54 @@ public class Review extends BaseEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    public void update(ReviewUpdateRequestDto request) {
+    @Column(name = "rating", nullable = false)
+    private Double rating;
+
+    @Column(name = "like_count")
+    private Integer likeCount = 0;
+
+    @Column(name = "dislike_count")
+    private Integer dislikeCount = 0;
+
+    @Column(name = "report_count")
+    private Integer reportCount = 0;
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewTag> reviewTags = new ArrayList<>();
+
+    public void update(ReviewUpdateRequestDto request, List<ReviewTag> newTags) {
         if (request.content() != null) {
             this.content = request.content();
         }
         if (request.imageUrl() != null) {
             this.imageUrl = request.imageUrl();
         }
+        this.rating = request.rating();
+
+        this.reviewTags.clear();
+        this.reviewTags.addAll(newTags);
     }
 
+    public void increaseReactionCount(ReactionType reactionType) {
+        if (reactionType == ReactionType.LIKE) this.likeCount++;
+        else this.dislikeCount++;
+    }
 
+    public void decreaseReactionCount(ReactionType reactionType) {
+        if (reactionType == ReactionType.LIKE) this.likeCount--;
+        else this.dislikeCount--;
+    }
+
+    public void increaseReportCount() {
+        this.reportCount++;
+    }
+
+    public void changeReaction(ReactionType from, ReactionType to) {
+        decreaseReactionCount(from);
+        increaseReactionCount(to);
+    }
+
+    public void addTags(List<ReviewTag> reviewTags) {
+        this.reviewTags.addAll(reviewTags);
+    }
 }
