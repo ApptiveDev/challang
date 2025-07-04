@@ -6,6 +6,7 @@ import com.challang.backend.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import java.util.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "liquor")
@@ -49,6 +50,18 @@ public class Liquor extends BaseEntity {
     @OneToMany(mappedBy = "liquor")
     private final List<LiquorTag> liquorTags = new ArrayList<>();
 
+    @Column(name = "average_rating")
+    @ColumnDefault("0.0")
+    private Double averageRating;
+
+    @Column(name = "review_count")
+    @ColumnDefault("0")
+    private Integer reviewCount;
+
+    public void updateAverageRating(Double newAverageRating, Integer newReviewCount) {
+        this.averageRating = newAverageRating;
+        this.reviewCount = newReviewCount;
+    }
 
     @Builder
     public Liquor(LiquorLevel level, LiquorType type, String name, String imageUrl, String tastingNote, String origin,
