@@ -44,4 +44,7 @@ public interface ArchiveRepository extends JpaRepository<Archive, Long> {
             @Param("cursor") Long cursor,
             Pageable pageable
     );
+
+    // 술 id만 얻는 용도 => joinX
+    List<Archive> findByUser(User user);
 };
