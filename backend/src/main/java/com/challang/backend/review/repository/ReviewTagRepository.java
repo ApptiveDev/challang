@@ -14,7 +14,7 @@ import java.util.List;
 public interface ReviewTagRepository extends JpaRepository<ReviewTag, Long> {
 
     @Query("SELECT new com.challang.backend.liquor.dto.response.TagStatDto(" +
-            "    rt.tag.name AS tagName, " +
+            "    rt.tag.name, " +
             "    (CAST(COUNT(DISTINCT rt.review.id) AS double) * 100.0 / l.reviewCount)" +
             ") " +
             "FROM ReviewTag rt JOIN rt.review.liquor l " +
