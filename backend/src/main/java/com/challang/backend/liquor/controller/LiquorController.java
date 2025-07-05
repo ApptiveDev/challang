@@ -45,16 +45,17 @@ public class LiquorController {
         return ResponseEntity.ok(new BaseResponse<>(response));
     }
 
-    @Operation(summary = "주류 전체 조회", description = "이름 기준 커서 방식으로 주류 목록을 조회합니다.")
+    @Operation(summary = "주류 전체 조회", description = "이름 또는 태그 기준 키워드 검색과 커서 방식으로 주류 목록을 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "주류 전체 조회 성공")
     })
     @GetMapping
     public ResponseEntity<BaseResponse<LiquorListResponse>> findAll(
             @RequestParam(required = false) String cursorName,
-            @RequestParam(defaultValue = "10") Integer pageSize
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false) String keyword
     ) {
-        LiquorListResponse response = liquorService.findAll(cursorName, pageSize);
+        LiquorListResponse response = liquorService.findAll(cursorName, pageSize, keyword);
         return ResponseEntity.ok(new BaseResponse<>(response));
     }
 

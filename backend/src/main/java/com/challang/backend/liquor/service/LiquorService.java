@@ -92,10 +92,10 @@ public class LiquorService {
 
     // 주류 전체 조회
     @Transactional(readOnly = true)
-    public LiquorListResponse findAll(String cursorName, Integer pageSize) {
+    public LiquorListResponse findAll(String cursorName, Integer pageSize,  String keyword) {
         Pageable pageable = PageRequest.of(0, pageSize + 1); // +1: 다음 페이지 여부 확인용
 
-        List<Liquor> liquors = liquorRepository.findAllWithTagsByCursor(cursorName, pageable);
+        List<Liquor> liquors = liquorRepository.findAllWithTagsByCursor(cursorName, keyword, pageable);
 
         boolean hasNext = liquors.size() > pageSize;
         if (hasNext) {
