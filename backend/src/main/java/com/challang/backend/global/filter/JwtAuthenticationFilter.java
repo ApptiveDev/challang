@@ -50,12 +50,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // TODO: 개발 완료 후 삭제 예정
-        if (true) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         try {
             // 1. 토큰 추출
             String token = jwtUtil.resolveToken(request);
@@ -63,12 +57,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // 2. 토큰 유효성 검증
             if (jwtUtil.validateToken(token) == VALID_JWT) {
                 // 3. redis에 저장된 토큰과 비교
-                String jti = jwtUtil.getJti(token);
-                String storedToken = redisUtil.getData(jti);
-                if (storedToken == null || !storedToken.equals(token)) {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않은 토큰입니다.");
-                    return;
-                }
+//                String jti = jwtUtil.getJti(token);
+//                String storedToken = redisUtil.getData(jti);
+//                if (storedToken == null || !storedToken.equals(token)) {
+//                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효하지 않은 토큰입니다.");
+//                    return;
+//                }
 
                 /// 4. 인증 정보 등록
                 Long userId = jwtUtil.getId(token);
