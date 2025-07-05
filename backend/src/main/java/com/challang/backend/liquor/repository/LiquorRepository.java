@@ -31,11 +31,21 @@ public interface LiquorRepository extends JpaRepository<Liquor, Long> {
                 LEFT JOIN FETCH l.level
                 LEFT JOIN FETCH l.type
                 LEFT JOIN FETCH l.liquorTags lt
-                LEFT JOIN FETCH lt.tag
+                LEFT JOIN FETCH lt.tag t
                 WHERE (:cursor IS NULL OR l.name < :cursor)
-                ORDER BY l.name DESC
+                AND (
+                    :keyword IS NULL
+                    OR LOWER(l.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                    OR LOWER(t.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+                )
+                ORDER BY l.name ASC
             """)
-    List<Liquor> findAllWithTagsByCursor(@Param("cursor") String cursor, Pageable pageable);
+    List<Liquor> findAllWithTagsByCursor(
+            @Param("cursor") String cursor,
+            @Param("keyword") String keyword,
+            Pageable pageable
+    );
+
 
     @Query("""
                 SELECT DISTINCT l FROM Liquor l
