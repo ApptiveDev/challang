@@ -49,6 +49,7 @@ public class Review extends BaseEntity {
     private Integer reportCount = 0;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<ReviewTag> reviewTags = new ArrayList<>();
 
     public void update(ReviewUpdateRequestDto request, List<ReviewTag> newTags) {
@@ -85,5 +86,12 @@ public class Review extends BaseEntity {
 
     public void addTags(List<ReviewTag> reviewTags) {
         this.reviewTags.addAll(reviewTags);
+    }
+
+    @PreRemove
+    private void preRemove() {
+        if (liquor != null) {
+            liquor.handleReviewDeletion(this.rating);
+        }
     }
 }

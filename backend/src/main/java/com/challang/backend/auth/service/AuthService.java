@@ -156,7 +156,7 @@ public class AuthService {
 
         // 새 리프레시 토큰 저장
         String newJti = jwtUtil.getJti(newRefresh);
-        redisUtil.setDataExpire(newJti, userId.toString(), refreshExpiredSeconds);
+        redisUtil.setDataExpire(newJti, newRefresh, refreshExpiredSeconds);
 
         return new TokenResponse(newAccess, newRefresh);
     }
