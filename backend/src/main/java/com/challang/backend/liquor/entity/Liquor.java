@@ -38,9 +38,6 @@ public class Liquor extends BaseEntity {
     @Column(name = "origin", nullable = false)
     private String origin;
 
-    @Column(name = "color", nullable = false)
-    private String color;
-
     @Column(name = "min_abv", nullable = false)
     private Double minAbv;
 
@@ -65,14 +62,13 @@ public class Liquor extends BaseEntity {
 
     @Builder
     public Liquor(LiquorLevel level, LiquorType type, String name, String imageUrl, String tastingNote, String origin,
-                  String color, Double minAbv, Double maxAbv) {
+                  Double minAbv, Double maxAbv) {
         this.level = level;
         this.type = type;
         this.name = name;
         this.imageUrl = imageUrl;
         this.tastingNote = tastingNote;
         this.origin = origin;
-        this.color = color;
         this.minAbv = minAbv;
         this.maxAbv = maxAbv;
     }
@@ -86,9 +82,6 @@ public class Liquor extends BaseEntity {
         }
         if (request.origin() != null) {
             this.origin = request.origin();
-        }
-        if (request.color() != null) {
-            this.color = request.color();
         }
         if (request.minAbv() != null) {
             this.minAbv = request.minAbv();
